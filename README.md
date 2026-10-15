@@ -1,5 +1,7 @@
 # 貪吃蛇 · SNAKE CLUB
 
+**[點此線上遊玩](https://phsdad.github.io/snake-club/)**
+
 無須安裝套件的瀏覽器遊戲。直接用瀏覽器開啟根目錄的 `index.html` 即可遊玩；這個單檔版本也適合 GitHub Pages。可編輯的分檔原始碼位於 `dist/`：`index.html`、`style.css`、`app.js` 與 `engine.js`。所有素材均在本機，無外部資源依賴。
 
 - 方向鍵或 WASD：轉向
@@ -13,5 +15,4 @@
 
 規則測試：`node --test tests/engine.test.cjs`。
 
-GitHub Pages：將儲存庫的部署來源設為主分支的根目錄 `/`，便可直接開啟遊戲。
-
+GitHub Pages 已從主分支的根目錄 `/` 發佈。
