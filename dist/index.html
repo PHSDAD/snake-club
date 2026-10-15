@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#f4f6ee">
+  <meta name="description" content="再吃一口！一款清新復古的貪吃蛇遊戲，支援方向鍵、WASD 與觸控，三種速度任你挑戰。">
+  <title>貪吃蛇 · SNAKE CLUB</title>
+  <link rel="stylesheet" href="style.css">
+  <script src="engine.js" defer></script>
+  <script src="app.js" defer></script>
+</head>
+<body>
+  <div class="shell">
+    <header class="topbar">
+      <a class="brand" href="./" aria-label="Snake Club 首頁"><span class="brand-mark" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i></span>SNAKE CLUB<span class="brand-dot">®</span></a>
+      <span class="edition"><span class="tiny-dot"></span> 經典小遊戲，快樂無限大</span>
+      <button id="sound" class="sound-button" type="button" aria-pressed="false" aria-label="開啟音效"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M11 5 6 9H3v6h3l5 4V5Z"/><path id="sound-waves" d="m16 9 6 6m0-6-6 6"/></svg><span id="sound-label">音效關閉</span></button>
+    </header>
+
+    <main>
+      <section class="intro" aria-labelledby="title">
+        <div><div class="eyebrow">A LITTLE BREAK. A BIG APPETITE.</div><h1 id="title">再吃一口<span class="title-dot">。</span><svg class="title-spark" viewBox="0 0 48 48" aria-hidden="true"><path d="M24 3v42M3 24h42M9 9l30 30M9 39 39 9"/></svg></h1><p>轉個彎，吃顆果實。看看你能長到多長？</p></div>
+        <div class="intro-note"><span class="mini-fruit" aria-hidden="true"></span><span>簡單上手<br><strong>停不下來</strong></span><svg viewBox="0 0 56 38" aria-hidden="true"><path d="M2 6c20 0 32 0 31 15-1 10-13 9-13 2 0-10 22-7 30 2m-11-10 12 11-14 4"/></svg></div>
+      </section>
+
+      <section class="game-layout" aria-label="貪吃蛇遊戲">
+        <div class="play-column">
+          <div class="board-frame">
+            <div class="board-topline"><span id="status"><span class="status-dot"></span><span id="status-text">準備出發</span></span><span class="board-caption">EAT · GROW · REPEAT</span></div>
+            <div class="board" id="board">
+              <canvas id="canvas" width="720" height="720" aria-label="貪吃蛇遊戲區，使用方向鍵或 WASD 移動"></canvas>
+              <div class="overlay" id="overlay">
+                <div class="overlay-card">
+                  <div class="game-symbol" id="game-symbol" aria-hidden="true"><span>●</span><span>●</span></div>
+                  <div class="overlay-eyebrow" id="overlay-eyebrow">HEY, HUNGRY SNAKE!</div>
+                  <h2 id="overlay-title">準備好開吃了嗎？</h2>
+                  <p id="overlay-description">吃果實、變長長，小心別撞到自己。</p>
+                  <button id="overlay-action" class="primary-button" type="button"><span id="overlay-action-text">開始遊戲</span><span aria-hidden="true">↗</span></button>
+                  <span class="overlay-hint" id="overlay-hint">或按 Enter 開始</span>
+                </div>
+              </div>
+              <span class="point-pop" id="point-pop" aria-hidden="true">+10</span>
+            </div>
+            <div class="board-bottomline"><span><span class="fruit-dot"></span> 每顆果實 +10 分</span><span id="length-label">長度 04</span></div>
+          </div>
+          <div class="below-board"><span><span class="live-dot"></span> 小休息，也能有大紀錄。</span><span>MADE FOR YOUR BREAK</span></div>
+        </div>
+
+        <aside class="sidebar" aria-label="遊戲設定與紀錄">
+          <div class="score-card"><div class="score-header"><span>這次的分數</span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m13 2-9 12h7l-1 8 10-13h-7l1-7Z"/></svg></div><div class="score-value" id="score">000</div><div class="best-row"><span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m4 7 4 4 4-7 4 7 4-4-2 11H6L4 7Z"/></svg> 最高紀錄</span><strong id="best">000</strong></div></div>
+
+          <div class="settings"><div class="section-label"><h2>挑個節奏</h2><span id="speed-label">標準速度</span></div><div class="difficulty" role="group" aria-label="遊戲速度"><button type="button" data-level="slow" aria-pressed="false">慢慢來</button><button type="button" data-level="normal" aria-pressed="true" class="selected">剛剛好</button><button type="button" data-level="fast" aria-pressed="false">加把勁</button></div><p id="difficulty-note" class="setting-note">不急不徐，找到你的節奏。</p></div>
+
+          <div class="actions"><button type="button" id="main-action" class="primary-button"><span id="main-action-text">開始遊戲</span><svg id="action-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="m9 5 11 7-11 7V5Z"/></svg></button><button type="button" id="restart" class="restart-button"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 10a8 8 0 1 1 1 7M4 4v6h6"/></svg> 重新開始 <span>R</span></button></div>
+
+          <div class="how-to"><h2>一點點操作指南</h2><div class="control-row"><span>控制方向</span><span class="key-cluster"><kbd>←</kbd><span><kbd>↑</kbd><kbd>↓</kbd></span><kbd>→</kbd></span></div><div class="control-row"><span>也可以用</span><span class="wasd"><kbd>W</kbd><kbd>A</kbd><kbd>S</kbd><kbd>D</kbd></span></div><div class="control-row"><span>暫停 / 繼續</span><kbd class="space-key">SPACE</kbd></div><p>吃掉紅色果實，避開牆壁與自己的身體。</p></div>
+
+          <div class="touch-controls" aria-label="觸控方向鍵"><span>滑動棋盤或輕觸方向鍵</span><div class="dpad"><button type="button" data-direction="up" aria-label="向上">↑</button><button type="button" data-direction="left" aria-label="向左">←</button><span class="dpad-center" aria-hidden="true">✦</span><button type="button" data-direction="right" aria-label="向右">→</button><button type="button" data-direction="down" aria-label="向下">↓</button></div></div>
+        </aside>
+      </section>
+      <p class="sr-only" id="announcement" aria-live="polite" aria-atomic="true"></p>
+    </main>
+    <footer><span>© SNAKE CLUB</span><span>快樂很簡單，下一顆就知道。</span><span class="footer-badge">JUST ONE MORE.</span></footer>
+  </div>
+</body>
+</html>
